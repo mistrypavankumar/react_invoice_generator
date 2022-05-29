@@ -7,7 +7,6 @@ import Header from "./components/Header";
 import MainDetails from "./components/MainDetails";
 import Notes from "./components/Notes";
 import Table from "./components/Table";
-import TextInputForm from "./components/TextInputFom/TextInputForm";
 
 const initialState = {
   client: {
@@ -33,14 +32,14 @@ const initialState = {
     dueDate: "",
   },
 
-  items: [
-    {
-      description: "",
-      quantity: "",
-      price: "",
-      amount: "",
-    },
-  ],
+  invoiceItem: {
+    itemDescription: "",
+    quantity: 0,
+    price: 0.0,
+    amount: undefined,
+  },
+
+  listItems: [],
 
   notes: "",
 };

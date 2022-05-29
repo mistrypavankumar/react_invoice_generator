@@ -31,6 +31,7 @@ const ClientDetailsForm = ({
                     state={state}
                     setState={setState}
                     setAddItems={setAddItems}
+                    invoiceItem={state.invoiceItem}
                   />
                 </div>
               ) : (
