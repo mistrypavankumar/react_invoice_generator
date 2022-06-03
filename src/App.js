@@ -32,20 +32,18 @@ const initialState = {
     dueDate: "",
   },
 
-  invoiceItem: {
-    itemDescription: "",
-    quantity: 0,
-    price: 0.0,
-    amount: undefined,
-  },
-
-  listItems: [],
-
   notes: "",
 };
 
 const App = () => {
   const [showInvoice, setShowInvoice] = useState(false);
+
+  const [itemDescription, setItemDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [amount, setAmount] = useState("");
+  const [list, setList] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const [state, setState] = useState(initialState);
 
@@ -65,7 +63,7 @@ const App = () => {
 
             <Dates invoice={state.invoice} />
 
-            <Table />
+            <Table list={list} total={total} setTotal={setTotal} />
 
             <Notes notes={state.notes} />
 
@@ -82,7 +80,19 @@ const App = () => {
           <>
             <CreateInvoice
               state={state}
+              itemDescription={itemDescription}
+              setItemDescription={setItemDescription}
+              quantity={quantity}
+              setQuantity={setQuantity}
+              price={price}
+              setPrice={setPrice}
+              amount={amount}
+              setAmount={setAmount}
+              list={list}
+              setList={setList}
               setState={setState}
+              total={total}
+              setTotal={setTotal}
               setShowInvoice={setShowInvoice}
             />
           </>

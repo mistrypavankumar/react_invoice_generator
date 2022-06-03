@@ -8,6 +8,18 @@ const ClientDetailsForm = ({
   setState,
   setShowInvoice,
   setShowClient,
+  itemDescription,
+  setItemDescription,
+  price,
+  setPrice,
+  quantity,
+  setQuantity,
+  amount,
+  setAmount,
+  list,
+  setList,
+  total,
+  setTotal,
 }) => {
   const [showNotes, setShowNotes] = useState(false);
   const [addItems, setAddItems] = useState(false);
@@ -30,8 +42,21 @@ const ClientDetailsForm = ({
                   <TableForm
                     state={state}
                     setState={setState}
+                    itemDescription={itemDescription}
+                    setItemDescription={setItemDescription}
+                    price={price}
+                    setPrice={setPrice}
+                    quantity={quantity}
+                    setQuantity={setQuantity}
+                    amount={amount}
+                    setAmount={setAmount}
                     setAddItems={setAddItems}
                     invoiceItem={state.invoiceItem}
+                    setShowInvoice={setShowInvoice}
+                    list={list}
+                    setList={setList}
+                    total={total}
+                    setTotal={setTotal}
                   />
                 </div>
               ) : (

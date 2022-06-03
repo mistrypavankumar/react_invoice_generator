@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = () => {
+const Table = ({ list, total }) => {
   const tableHeaders = ["Item description", "Quantity", "Price", "Amount"];
   return (
     <>
@@ -18,32 +18,22 @@ const Table = () => {
         </thead>
 
         <tbody>
-          <tr>
-            <td>Bed</td>
-            <td>2</td>
-            <td>25,000</td>
-            <td>50,000</td>
-          </tr>
-          <tr>
-            <td>Bed</td>
-            <td>2</td>
-            <td>25,000</td>
-            <td>50,000</td>
-          </tr>
-          <tr>
-            <td>Bed</td>
-            <td>2</td>
-            <td>25,000</td>
-            <td>50,000</td>
-          </tr>
-          <tr>
-            <td>Bed</td>
-            <td>2</td>
-            <td>25,000</td>
-            <td>50,000</td>
-          </tr>
+          {list.map((item, index) => (
+            <tr key={index}>
+              <td>{item.itemDescription}</td>
+              <td>{item.quantity}</td>
+              <td>{item.price}</td>
+              <td>{item.amount}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
+
+      <div className="mt-10">
+        <h2 className="flex items-end justify-end text-gray-800 text-3xl font-bold">
+          Rs.{total.toLocaleString()}
+        </h2>
+      </div>
     </>
   );
 };
