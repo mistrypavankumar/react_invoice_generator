@@ -1,7 +1,21 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import AddClientNotes from "../AddClientNotes/AddClientNotes";
 import TableForm from "../TableForm/TableForm";
 import TextInputForm from "../TextInputFom/TextInputForm";
+import { actionCreators } from "../../states";
+
+const clientInitialState = {
+  name: "",
+  address: "",
+  phoneNumber: "",
+};
+
+const invoiceInitialState = {
+  invoiceNumber: "",
+  date: "",
+  dueDate: "",
+};
 
 const ClientDetailsForm = ({
   state,
@@ -23,6 +37,11 @@ const ClientDetailsForm = ({
 }) => {
   const [showNotes, setShowNotes] = useState(false);
   const [addItems, setAddItems] = useState(false);
+
+  const [clientDetails, setClientDetails] = useState(clientInitialState);
+  const [invoiceDetails, setInvoiceDetails] = useState(invoiceInitialState);
+
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -75,24 +94,21 @@ const ClientDetailsForm = ({
                     <div className="md:grid grid-cols-2 gap-10">
                       <TextInputForm
                         label={"Client name"}
-                        value={state.client.name}
+                        value={clientDetails.name}
                         onChange={(e) =>
-                          setState({
-                            ...state,
-                            client: { ...state.client, name: e.target.value },
+                          setClientDetails({
+                            ...clientDetails,
+                            name: e.target.value,
                           })
                         }
                       />
                       <TextInputForm
                         label={"Company address"}
-                        value={state.client.address}
+                        value={clientDetails.address}
                         onChange={(e) =>
-                          setState({
-                            ...state,
-                            client: {
-                              ...state.client,
-                              address: e.target.value,
-                            },
+                          setClientDetails({
+                            ...clientDetails,
+                            address: e.target.value,
                           })
                         }
                       />
@@ -101,28 +117,22 @@ const ClientDetailsForm = ({
                       <TextInputForm
                         label={"Phone number"}
                         type="text"
-                        value={state.client.phoneNumber}
+                        value={clientDetails.phoneNumber}
                         onChange={(e) =>
-                          setState({
-                            ...state,
-                            client: {
-                              ...state.client,
-                              phoneNumber: e.target.value,
-                            },
+                          setClientDetails({
+                            ...clientDetails,
+                            phoneNumber: e.target.value,
                           })
                         }
                       />
                       <TextInputForm
                         label={"Invoice number"}
                         type="text"
-                        value={state.invoice.invoiceNumber}
+                        value={invoiceDetails.invoiceNumber}
                         onChange={(e) =>
-                          setState({
-                            ...state,
-                            invoice: {
-                              ...state.invoice,
-                              invoiceNumber: e.target.value,
-                            },
+                          setInvoiceDetails({
+                            ...invoiceDetails,
+                            invoiceNumber: e.target.value,
                           })
                         }
                       />
@@ -131,11 +141,11 @@ const ClientDetailsForm = ({
                       <TextInputForm
                         label={"Invoiced date"}
                         type="date"
-                        value={state.invoice.date}
+                        value={invoiceDetails.date}
                         onChange={(e) =>
-                          setState({
-                            ...state,
-                            invoice: { ...state.invoice, date: e.target.value },
+                          setInvoiceDetails({
+                            ...invoiceDetails,
+                            date: e.target.value,
                           })
                         }
                       />
@@ -143,14 +153,11 @@ const ClientDetailsForm = ({
                       <TextInputForm
                         label={"Due date"}
                         type="date"
-                        value={state.invoice.dueDate}
+                        value={invoiceDetails.dueDate}
                         onChange={(e) =>
-                          setState({
-                            ...state,
-                            invoice: {
-                              ...state.invoice,
-                              dueDate: e.target.value,
-                            },
+                          setInvoiceDetails({
+                            ...invoiceDetails,
+                            dueDate: e.target.value,
                           })
                         }
                       />
@@ -166,7 +173,12 @@ const ClientDetailsForm = ({
                       </button>
                       <button
                         className="bg-blue-500 py-2 px-8 rounded shadow border-2 border-blue-500 text-white hover:bg-transparent hover:text-blue-500 font-bold transition-all duration-300"
-                        onClick={() => setAddItems(true)}
+                        onClick={() => {
+                          setAddItems(true);
+                          dispatch(
+                            actionCreators.addClientDetails(clientDetails)
+                          );
+                        }}
                       >
                         Add Items
                       </button>

@@ -42,11 +42,7 @@ const CreateInvoice = ({
           setTotal={setTotal}
         />
       ) : (
-        <CompanyDetails
-          state={state}
-          setState={setState}
-          setShowClient={setShowClient}
-        />
+        <CompanyDetails setShowClient={setShowClient} />
       )}
     </>
   );

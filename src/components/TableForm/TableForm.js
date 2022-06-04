@@ -2,26 +2,36 @@ import React, { useEffect, useState } from "react";
 import TextInputForm from "../TextInputFom/TextInputForm";
 import { v4 as uuidv4 } from "uuid";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators } from "../../states";
 
 const tableHeaders = ["Item description", "Quantity", "Price", "Amount"];
+
+const productItemInitialState = {
+  itemDescription: "",
+  quantity: "",
+  price: "",
+  amount: "",
+};
 
 const TableForm = ({
   setAddItems,
   setShowInvoice,
-  itemDescription,
-  setItemDescription,
-  price,
-  setPrice,
-  quantity,
-  setQuantity,
-  amount,
-  setAmount,
   list,
   setList,
   total,
   setTotal,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const [itemDescription, setItemDescription] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [price, setPrice] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const dispatch = useDispatch();
+  const invoice = useSelector((state) => state.invoice);
+  console.log(invoice);
 
   useEffect(() => {
     setAmount(quantity * price);
@@ -36,6 +46,10 @@ const TableForm = ({
         sum += isNaN(rows[i].innerHTML) ? 0 : parseInt(rows[i].innerHTML);
         setTotal(sum);
       }
+    }
+
+    if (list.length === 0) {
+      setTotal(0);
     }
   });
 
@@ -120,6 +134,16 @@ const TableForm = ({
             </button>
             <button
               type="submit"
+              onClick={() => {
+                dispatch(
+                  actionCreators.addListOfProducts({
+                    itemDescription,
+                    quantity,
+                    price,
+                    amount,
+                  })
+                );
+              }}
               className="bg-green-500 py-2 px-8 rounded shadow border-2 border-green-500 text-white hover:bg-transparent hover:text-green-500 font-bold transition-all duration-300"
             >
               {isEditing ? "Editing items" : " Add Item"}

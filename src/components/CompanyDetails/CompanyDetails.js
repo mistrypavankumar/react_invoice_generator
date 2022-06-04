@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import TextInputForm from "../TextInputFom/TextInputForm";
+import { actionCreators } from "../../states";
 
-const CompanyDetails = ({ state, setState, setShowClient }) => {
+const initialState = {
+  name: "",
+  address: "",
+  email: "",
+  phoneNumber: "",
+  website: "",
+  bankName: "",
+  accountHolder: "",
+  accountNumber: "",
+};
+
+const CompanyDetails = ({ setShowClient }) => {
+  const [companyData, setCompanyData] = useState(initialState);
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="mb-5">
@@ -11,22 +27,16 @@ const CompanyDetails = ({ state, setState, setShowClient }) => {
         <div className="md:grid grid-cols-2 gap-10">
           <TextInputForm
             label={"Company name"}
-            value={state.company.name}
+            value={companyData.name}
             onChange={(e) =>
-              setState({
-                ...state,
-                company: { ...state.company, name: e.target.value },
-              })
+              setCompanyData({ ...companyData, name: e.target.value })
             }
           />
           <TextInputForm
             label={"Company address"}
-            value={state.company.address}
+            value={companyData.address}
             onChange={(e) =>
-              setState({
-                ...state,
-                company: { ...state.company, address: e.target.value },
-              })
+              setCompanyData({ ...companyData, address: e.target.value })
             }
           />
         </div>
@@ -34,72 +44,57 @@ const CompanyDetails = ({ state, setState, setShowClient }) => {
           <TextInputForm
             label={"Email"}
             type="email"
-            value={state.company.email}
+            value={companyData.email}
             onChange={(e) =>
-              setState({
-                ...state,
-                company: { ...state.company, email: e.target.value },
-              })
+              setCompanyData({ ...companyData, email: e.target.value })
             }
           />
 
           <TextInputForm
             label={"Phone number"}
-            value={state.company.phoneNumber}
+            value={companyData.phoneNumber}
             onChange={(e) =>
-              setState({
-                ...state,
-                company: { ...state.company, phoneNumber: e.target.value },
-              })
+              setCompanyData({ ...companyData, phoneNumber: e.target.value })
             }
           />
           <TextInputForm
             label={"Website Link"}
             type="url"
-            value={state.company.website}
+            value={companyData.website}
             onChange={(e) =>
-              setState({
-                ...state,
-                company: { ...state.company, website: e.target.value },
-              })
+              setCompanyData({ ...companyData, website: e.target.value })
             }
           />
         </div>
 
         <TextInputForm
           label={"Bank name"}
-          value={state.company.bankName}
+          value={companyData.bankName}
           onChange={(e) =>
-            setState({
-              ...state,
-              company: { ...state.company, bankName: e.target.value },
-            })
+            setCompanyData({ ...companyData, bankName: e.target.value })
           }
         />
         <TextInputForm
           label={"Account holder"}
-          value={state.company.accountHolder}
+          value={companyData.accountHolder}
           onChange={(e) =>
-            setState({
-              ...state,
-              company: { ...state.company, accountHolder: e.target.value },
-            })
+            setCompanyData({ ...companyData, accountHolder: e.target.value })
           }
         />
         <TextInputForm
           label={"Account Number"}
-          value={state.company.accountNumber}
+          value={companyData.accountNumber}
           onChange={(e) =>
-            setState({
-              ...state,
-              company: { ...state.company, accountNumber: e.target.value },
-            })
+            setCompanyData({ ...companyData, accountNumber: e.target.value })
           }
         />
 
         <button
           className="bg-blue-500 py-2 px-8 rounded shadow border-2 border-blue-500 text-white hover:bg-transparent hover:text-blue-500 font-bold transition-all duration-300"
-          onClick={() => setShowClient(true)}
+          onClick={() => {
+            setShowClient(true);
+            dispatch(actionCreators.addCompanyDetails(companyData));
+          }}
         >
           Next
         </button>
